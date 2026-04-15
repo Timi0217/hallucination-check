@@ -114,6 +114,16 @@ class BatchCheckResponse(BaseModel):
 
 # ── Routes ────────────────────────────────────────────────────────────
 
+from fastapi.responses import PlainTextResponse
+from pathlib import Path
+
+
+@app.get("/llms.txt", response_class=PlainTextResponse)
+@app.get("/.well-known/llms.txt", response_class=PlainTextResponse)
+def llms_txt():
+    return (Path(__file__).parent / "llms.txt").read_text()
+
+
 @app.get("/")
 def home():
     return {
